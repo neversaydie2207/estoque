@@ -1,0 +1,501 @@
+<ui:composition template="/WEB-INF/template/layout-dashboard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<f:viewAction action="#{gerenciarUsuarioBean.init()}" />
+		</f:metadata>
+
+	</ui:define>
+
+	<ui:define name="navbar-title">
+		<a class="navbar-brand" href="#"> Gerenciar Usuarios </a>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<div class="content">
+			<div class="container-fluid">
+
+				<div class="col-md-12">
+
+					<div class="card">
+
+						<div class="card-header" data-background-color="green">
+							<i class="material-icons">account_circle</i>
+							<h4 class="title white-text">Gerenciar Usuarios</h4>
+						</div>
+
+						<div class="card-content">
+
+							<div class="nav-center">
+
+								<ul id="myTabs"
+									class="nav nav-pills nav-pills-info nav-pills-icons "
+									role="tablist">
+
+									<li><a href="#tabGerenciarUsuario" role="tab"
+										data-toggle="tab"> <i class="material-icons">create</i>
+											Gerenciar Usuario
+									</a></li>
+
+									<li class="active"><a href="#tabUsuariosCadastradas"
+										role="tab" data-toggle="tab"> <i class="material-icons">reorder</i>
+											Usuários Cadastrados
+									</a></li>
+
+								</ul>
+
+
+							</div>
+
+							<div class="tab-content">
+								<div class="tab-pane" id="tabGerenciarUsuario"
+									style="padding: 20px;">
+
+									<h:form id="frmGerenciarUsuario">
+
+										<div class="col-md-12">
+
+											<h:panelGroup id="grupoMsg">
+
+												<p:ajaxStatus>
+													<f:facet name="start">
+
+														<div class="progress">
+															<div class="indeterminate"></div>
+														</div>
+
+													</f:facet>
+
+													<f:facet name="complete">
+														<h:outputText value="" />
+													</f:facet>
+												</p:ajaxStatus>
+
+												<ui:include
+													src="/WEB-INF/template/fragments/messages/alert-messages.xhtml" />
+
+											</h:panelGroup>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<h4 class="title"
+													style="font-weight: bold; padding-top: 20px;">Informações
+													do(a) Usuário(a)</h4>
+											</div>
+
+											<div class="col-md-8">
+												<div class="form-group ">
+													<label class="control-label">Nome <small>*</small></label>
+													<h:inputText id="nome" styleClass="form-control"
+														value="#{gerenciarUsuarioBean.usuario.nome}"
+														required="true" requiredMessage="Campo NOME é obrigatório"
+														disabled="#{empty gerenciarUsuarioBean.usuario.nome}" />
+
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group ">
+													<label class="control-label">Nick / Como é
+														conhecido? <small>*</small>
+													</label>
+													<h:inputText id="apelido" styleClass="form-control"
+														value="#{gerenciarUsuarioBean.usuario.apelido}"
+														required="true"
+														requiredMessage="Campo NICK/COMO É CONHECIDO é obrigatório"
+														disabled="#{empty gerenciarUsuarioBean.usuario.apelido}" />
+
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="control-label">Data de Nascimento <small>*</small></label>
+													<h:inputText id="nascimento"
+														styleClass="form-control js-mask-data"
+														value="#{gerenciarUsuarioBean.usuario.dataNascimento}"
+														required="true"
+														requiredMessage="Campo DATA DE NASCIMENTO é Obrigatório."
+														disabled="#{empty gerenciarUsuarioBean.usuario.dataNascimento}">
+
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+
+													</h:inputText>
+
+												</div>
+											</div>
+
+											<div class="col-md-4">
+
+												<div class="form-group">
+
+													<label class="control-label">SEXO <small>*</small></label>
+
+													<h:selectOneMenu id="sexo" styleClass="select form-control"
+														pt:data-style="select-with-transition" pt:data-size="7"
+														value="#{gerenciarUsuarioBean.usuario.sexo}"
+														required="true" requiredMessage="Campo SEXO é Obrigatório"
+														disabled="#{empty gerenciarUsuarioBean.usuario.sexo}">
+
+														<f:selectItem itemLabel="Selecione"
+															noSelectionOption="true" />
+
+														<f:selectItems value="#{gerenciarUsuarioBean.listSexo}"
+															var="s" itemValue="#{s}" itemLabel="#{s.nome}" />
+
+													</h:selectOneMenu>
+
+												</div>
+
+											</div>
+
+											<div class="col-md-4">
+
+												<div class="form-group ">
+													<label class="control-label">Fone </label>
+													<h:inputText id="fone"
+														styleClass="form-control js-mask-telefone"
+														value="#{gerenciarUsuarioBean.usuario.telefone}"
+														disabled="#{empty gerenciarUsuarioBean.usuario.telefone}" />
+												</div>
+
+											</div>
+
+											<div class="col-md-4">
+
+												<div class="form-group ">
+													<label class="control-label">E-Mail <small>*</small></label>
+													<h:inputText id="email"
+														styleClass="form-control ag-uppercase-none"
+														value="#{gerenciarUsuarioBean.usuario.email}"
+														required="true"
+														requiredMessage="Campo E-MAIL é Obrigatório"
+														disabled="true" />
+												</div>
+
+											</div>
+
+											<div class="col-md-4">
+
+												<div class="form-group">
+
+													<label class="control-label">Perfil <small>*</small></label>
+
+													<h:selectOneMenu id="perfil"
+														styleClass="select form-control"
+														pt:data-style="select-with-transition" pt:data-size="7"
+														value="#{gerenciarUsuarioBean.usuario.grupo}"
+														required="true"
+														requiredMessage="Campo PERFIL é Obrigatório"
+														disabled="#{empty gerenciarUsuarioBean.usuario.email}">
+
+														<f:selectItem itemLabel="Selecione"
+															noSelectionOption="true" />
+
+														<f:selectItems value="#{gerenciarUsuarioBean.listPerfis}"
+															var="p" itemValue="#{p}" itemLabel="#{p.descricao}" />
+
+													</h:selectOneMenu>
+
+												</div>
+
+
+											</div>
+
+											<div class="col-md-4">
+												<div class="col-md-12">
+													<h5 class="title"
+														style="font-weight: bold; padding-top: 20px;">Situação</h5>
+												</div>
+												<div class="input-group">
+													<h:selectBooleanCheckbox
+														value="#{gerenciarUsuarioBean.usuario.ativo}"
+														styleClass="filled-in" id="usuarioAtivo"
+														disabled="#{empty gerenciarUsuarioBean.usuario.ativo}">
+
+													</h:selectBooleanCheckbox>
+
+													<label style="font-size: 1.3rem !important;"
+														jsf:for="usuarioAtivo">Usuário(a) Ativo(a)</label>
+												</div>
+											</div>
+
+
+										</div>
+										<!-- fim row -->
+
+										<div class="row">
+
+											<div class="col-md-12">
+												<h4 class="title"
+													style="font-weight: bold; padding-top: 20px;">Servidor(a)
+													Vinculado(a)</h4>
+											</div>
+
+											<div class="col-md-3">
+
+												<div class="form-group">
+													<label class="control-label blue-text">CPF <small>*</small></label>
+
+													<div class="input-group">
+														<h:inputText id="cpfServidor"
+															styleClass="form-control js-mask-cpf"
+															value="#{gerenciarUsuarioBean.servidor.cpf}"
+															disabled="#{not empty gerenciarUsuarioBean.servidor.cpf}">
+
+															<p:ajax event="blur"
+																listener="#{gerenciarUsuarioBean.pesquisarPorCpf()}"
+																update="nomeServidor, nascimentoServidor" />
+
+														</h:inputText>
+
+														<div class="input-group-addon">
+															<i class="material-icons">search</i>
+														</div>
+
+														<p:focus for="cpfServidor" />
+													</div>
+
+
+												</div>
+											</div>
+
+											<div class="col-md-5">
+												<div class="form-group ">
+													<label class="control-label blue-text">Nome
+														Completo <small>*</small>
+													</label>
+													<h:inputText id="nomeServidor" styleClass="form-control"
+														value="#{gerenciarUsuarioBean.servidor.nome}"
+														disabled="true" />
+												</div>
+											</div>
+
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="control-label blue-text">Data de
+														Nascimento <small>*</small>
+													</label>
+													<h:inputText id="nascimentoServidor"
+														styleClass="form-control js-mask-data"
+														value="#{gerenciarUsuarioBean.servidor.dataNascimento}"
+														disabled="true">
+
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+
+													</h:inputText>
+
+												</div>
+											</div>
+
+											<div class="col-md-1" style="padding-top: 30px;">
+												<a class="btn btn-simple btn-danger right"
+													data-backdrop="static" data-keyboard="false"
+													jsf:action="#{gerenciarUsuarioBean.desvincularServidor()}"
+													data-placement="top" pt:rel="tooltip"
+													title="Desvincular Servidor"> <p:ajax process="@this"
+														update="@form, scripts" /> <i class="material-icons">highlight_off</i>
+
+												</a>
+											</div>
+
+
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="modal-footer">
+													<h:commandButton styleClass="btn btn-simple" value="Novo"
+														action="#{gerenciarUsuarioBean.novo()}">
+														<p:ajax process="@this" update="@form, scripts" />
+													</h:commandButton>
+
+													<h:commandButton styleClass="btn btn-fill btn-primary"
+														style="margin: 0px !important;" value="Salvar"
+														action="#{gerenciarUsuarioBean.salvar()}">
+
+														<p:ajax process="@form"
+															update="@form, :frmUsuariosCadastrados, scripts"
+															onstart="amges.showDialog('processando')"
+															oncomplete="amges.showDialog('close')" />
+
+													</h:commandButton>
+
+
+												</div>
+
+											</div>
+										</div>
+
+									</h:form>
+
+								</div>
+								<!-- fim tab-pane -->
+
+								<div class="tab-pane active" id="tabUsuariosCadastradas">
+
+									<h:form id="frmUsuariosCadastrados">
+
+										<div class="row">
+											<div class="col-md-6 ">
+
+												<div class="form-group label-floating">
+													<label class="control-label">Pesquisar Usuario</label>
+													<div class="input-group">
+
+														<h:inputText id="pesquisaNome"
+															styleClass="form-control ag-uppercase-none"
+															value="#{gerenciarUsuarioBean.filtro.nome}" />
+
+														<div class="input-group-addon">
+															<p:commandLink id="btnPesquisarUsuario"
+																update="tblUsuarios" process="@form">
+																<i class="material-icons">search</i>
+															</p:commandLink>
+
+															<p:defaultCommand target="btnPesquisarUsuario"
+																scope="frmUsuariosCadastrados" />
+														</div>
+
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+										<br />
+										<p:dataTable value="#{gerenciarUsuarioBean.model}" lazy="true"
+											var="u" paginator="true" paginatorPosition="bottom" rows="10"
+											id="tblUsuarios" tableStyleClass="table table-striped"
+											reflow="true"
+											paginatorTemplate="{CurrentPageReport} {PageLinks} {RowsPerPageDropdown}"
+											rowsPerPageTemplate="5,10,15" rowKey="#{f.id}"
+											sortBy="#{f.nome}" sortOrder="ascending"
+											currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} 
+												- Página: {currentPage}/{totalPages} ]"
+											style="font-size: 1.2rem;" emptyMessage="Nenhum resultado">
+
+											<p:column width="10%" styleClass="center" sortBy="#{u.id}">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">ID</span>
+												</f:facet>
+
+												<h:outputText value="#{u.id}" />
+											</p:column>
+
+											<p:column width="40%" sortBy="#{u.nome}"
+												style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">Nome</span>
+												</f:facet>
+
+												<h:outputText value="#{u.nome.toUpperCase()}" />
+											</p:column>
+
+											<p:column width="20%" sortBy="#{u.grupo.descricao}"
+												style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">Perfil</span>
+												</f:facet>
+
+												<h:outputText value="#{u.grupo.descricao.toUpperCase()}" />
+											</p:column>
+
+											<p:column width="30%" sortBy="#{u.email}"
+												style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">E-Mail</span>
+												</f:facet>
+
+												<h:outputText value="#{u.email}" />
+											</p:column>
+
+											<p:column width="10%" style="text-align: left;">
+
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">Ativo</span>
+												</f:facet>
+
+
+												<div class="input-group ">
+													<h:selectBooleanCheckbox value="#{u.ativo}"
+														styleClass="filled-in" id="usuarioAtivo" disabled="true"
+														style="font-size: 0.2rem !important;">
+
+													</h:selectBooleanCheckbox>
+
+													<label style="font-size: 1.3rem !important;"
+														jsf:for="usuarioAtivo"></label>
+												</div>
+											</p:column>
+
+											<p:column width="20%" styleClass="td-actions text-center">
+
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">AÇÕES</span>
+												</f:facet>
+
+
+												<p:commandLink pt:rel="tooltip"
+													styleClass="btn btn-success btn-simple" process="@form"
+													update="@form, :frmGerenciarUsuario, scripts"
+													action="#{gerenciarUsuarioBean.editar()}"
+													pt:data-toggle="tooltip" pt:data-placement="left"
+													pt:title="Editar">
+													<i class="material-icons">edit</i>
+
+													<f:setPropertyActionListener
+														target="#{gerenciarUsuarioBean.usuario}" value="#{u}" />
+
+												</p:commandLink>
+
+
+											</p:column>
+
+										</p:dataTable>
+
+
+									</h:form>
+
+								</div>
+
+							</div>
+							<!-- fim tab-content -->
+
+
+						</div>
+						<!-- fim card-content -->
+
+
+					</div>
+					<!-- fim card -->
+
+				</div>
+				<!-- fim col -->
+
+			</div>
+			<!-- fim content-fluid -->
+
+
+		</div>
+		<!-- fim content -->
+
+
+		<!-- MODAIS -->
+
+	</ui:define>
+
+</ui:composition>

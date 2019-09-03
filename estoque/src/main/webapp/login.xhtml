@@ -1,0 +1,123 @@
+<ui:composition template="/WEB-INF/template/layout-full-page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	<ui:define name="metadata">
+	
+		<f:metadata>
+			<f:viewParam name="dummy"/>
+			<f:viewAction action="#{loginBean.preRender()}"/>
+		</f:metadata>
+		
+	</ui:define>
+	
+	<ui:define name="navbar-button--login">
+		
+		<li class="active">
+			<a jsf:outcome="/login.jsf">
+				<i class="material-icons">fingerprint</i> Login
+			</a>
+		</li>
+		
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		
+	
+		<div class="full-page login-page" data-image="#{request.contextPath}/resources/images/bkg_sic.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+                <div class="container">
+                
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        
+                            <h:form id="frmLogin" prependId="false">
+                            
+                                <div class="card card-login card-hidden ">
+                                    <div class="card-header text-center" data-background-color="ag-full-image" >
+                                        
+                                        <img src="#{request.contextPath}/resources/images/logo-pmi-sesa.png" 
+                                        	width="100%" height="100%"/>
+                                        
+                                    </div>
+                                    <p class="category text-center ">
+                                        <strong>LOGIN</strong>
+                                    </p>
+                                    <div class="card-content">
+                                       
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">email</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">E-Mail</label>
+                                                <input type="email" class="form-control" style="text-transform: none;"
+                                                	jsf:id="username" jsf:value="#{loginBean.usuario}"
+                                                	jsf:required="true" jsf:requiredMessage="Campo E-Mail é obrigatório."/>
+                                                
+                                                <p:focus for="username"/>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Senha</label>
+                                                <input type="password" class="form-control" jsf:id="password" style="text-transform: none;"
+                                                	jsf:required="true" jsf:requiredMessage="Campo Senha é obrigatório." 
+                                                	/>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="footer text-center">
+                                    	
+                                    	<div class="row">
+                                    		<br/>
+	                                    	<div class="col-md-11">
+												<h:messages errorClass="alert alert-danger " infoClass="alert alert-info" 
+													warnClass="alert alert-warning"  showSummary="true" layout="list"/>
+											</div>
+                                    	</div>
+                                    	
+                                    	<button class="btn btn-fill btn-primary btn-wd "
+                                        	jsf:action="#{loginBean.login()}"><b>Acessar</b></button>
+                                        
+                                        <button class="btn-wd btn btn-simple blue-text" style="font-size: 1rem;"
+                                        			jsf:outcome="solicitar-senha.jsf"><b>Esqueceu sua senha?</b></button>
+                                   	
+                                    </div>
+                                    
+                                </div>
+                                
+                            </h:form>
+                        
+                        </div>
+                        
+                    </div>
+                    
+                </div> <!-- fim container -->
+            
+            </div> <!-- fim content -->
+            
+            <ui:insert name="footer">
+   				<ui:include src="/WEB-INF/template/fragments/footer-full-page.xhtml" />
+   			</ui:insert>
+           
+           	
+		</div> <!-- fim fullpage -->
+		
+	</ui:define>
+	
+</ui:composition>

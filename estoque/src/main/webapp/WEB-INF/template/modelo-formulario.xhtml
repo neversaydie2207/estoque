@@ -1,0 +1,581 @@
+<ui:composition template="/WEB-INF/template/layout-dashboard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+	
+	<ui:define name="metadata">
+		
+		<f:metadata>
+			<f:viewAction action="#{cadastroUnidadeEnsinoBean.initUnidadeEnsino()}"/>
+			<f:viewAction action="#{cadastroUnidadeEnsinoBean.initLazyDataModel()}"/>
+		</f:metadata>
+		
+	</ui:define>
+	
+	<ui:define name="navbar-title">
+		<a class="navbar-brand" href="#" > Unidade de Ensino </a>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		
+		<div class="content">
+			<div class="container-fluid">
+				
+				<div class="col-md-12">
+					
+					<div class="card">
+						
+						<div class="card-header" data-background-color="purple">
+							<i class="material-icons">account_balance</i>
+							<h4 class="title white-text">Cadastrar Unidade de Ensino</h4>
+							<p class="category">Insira os dados da Instituição de Ensino</p>
+							
+						</div>
+						
+						<div class="card-content">
+							
+							<div class="nav-center">
+								
+								<ul id="myTabs" class="nav nav-pills nav-pills-warning nav-pills-icons " role="tablist">
+									
+									<li class="active">
+                                        <a href="#cadastroUnidadeEscolar" role="tab" data-toggle="tab">
+                                            <i class="material-icons">create</i> Cadastrar Unidade
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="#registrosUnidadeEscolar" role="tab" data-toggle="tab">
+                                            <i class="material-icons">reorder</i> Unidades Cadastradas
+                                        </a>
+                                    </li>
+								
+								</ul>
+								
+								
+							</div>
+							
+							<div class="tab-content">
+                                <div class="tab-pane active" id="cadastroUnidadeEscolar">
+                                
+								<h:form id="frmCadastroUnidadeEnsino" prependId="false">
+									
+									<div class="col-md-12">
+									
+										<p:ajaxStatus>
+											<f:facet name="start">
+												
+												<div class="progress">
+											    	<div class="indeterminate"></div>
+											  	</div>
+												
+											</f:facet>
+											
+											<f:facet name="complete">
+												<h:outputText value="" />
+											</f:facet>
+										</p:ajaxStatus>
+										
+										<ui:include src="/WEB-INF/template/fragments/messages/alert-messages.xhtml" />
+								    	
+									</div>
+									
+									<div class="row">
+										
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												<label class="control-label">INEP</label>
+												<div class="input-group">
+													<h:inputText id="inep" styleClass="form-control js-mask-inep"
+														value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.inep}"
+														required="true" requiredMessage="Campo INEP é obrigatório"
+														disabled="#{not empty cadastroUnidadeEnsinoBean.unidadeEnsino.inep}">
+														   
+														<f:converter converterId="javax.faces.Integer"/>
+														
+														<p:ajax event="blur" listener="#{cadastroUnidadeEnsinoBean.pesquisarUnidadeEnsino()}" 
+															update="@form, scripts"/>
+														
+													</h:inputText>
+													
+													<div class="input-group-addon">
+														<i class="material-icons">search</i>
+													</div>
+												
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-md-6">
+											<div class="form-group label-floating">
+												<label class="control-label">Nome</label>
+												<input jsf:id="nome" type="text" class="form-control ag-text-transform-uppercase"
+													jsf:value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.nome}"/>
+											</div>
+											
+										</div>
+										
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												
+												<label class="control-label">SITUAÇÃO</label>
+												<h:selectOneMenu id="situacaoFuncionamento" styleClass="select form-control" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.situacaoFuncionamento}" 
+													required="true" requiredMessage="Campo Sexo é requerido">
+													
+										   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listSituacaoFuncionamento}" 
+										   				var="s" itemValue="#{s}" itemLabel="#{s.descricao}"/>
+													                     
+										   		</h:selectOneMenu>
+										   		
+											</div>
+										</div>
+										
+									</div>
+									
+									<div class="row">
+										
+										<div class="col-md-3">
+												
+											<label class="control-label">UF</label>
+											
+											<h:selectOneMenu id="estado" styleClass="selectpicker " 
+												pt:data-style="select-with-transition" pt:data-size="7" 
+												value="#{cadastroUnidadeEnsinoBean.estadoSelecionado}" 
+												required="true" requiredMessage="Campo UF é obrigatório">
+												
+												<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+									   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listEstados}" 
+									   				var="e" itemValue="#{e}" itemLabel="#{e.uf}"/>
+									   			
+									   			<p:ajax listener="#{cadastroUnidadeEnsinoBean.listarCidadesPorCodigo()}" 
+													onstart="amges.showDialog('buscando')" oncomplete="amges.showDialog('close')"
+													update="scripts formGroupCidade " />
+									   			
+									   		</h:selectOneMenu>
+												
+										   		
+										</div> 
+										
+										<div class="col-md-5">
+											<div jsf:id="formGroupCidade">
+												
+												<label class="control-label">Cidade</label>
+												
+												<h:selectOneMenu id="cidade" styleClass="selectpicker " 
+													pt:data-style="select-with-transition" pt:data-size="7" 
+													value="#{cadastroUnidadeEnsinoBean.cidadeSelecionada}" 
+													required="true" requiredMessage="Campo CIDADE é obrigatório">
+													
+													<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+										   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listCidades}" 
+										   				var="c" itemValue="#{c}" itemLabel="#{c.nome}"/>
+										   			
+										   			<p:ajax listener="#{cadastroUnidadeEnsinoBean.listarDistritosPorCidade()}" 
+														onstart="amges.showDialog('buscando')" oncomplete="amges.showDialog('close')"
+														update="formGroupDistrito, formGroupCidadeDistrito, scripts" />
+	
+										   		</h:selectOneMenu>
+											   		
+											</div> 
+										   		
+										</div>
+										
+										<div class="col-md-3">
+											<div jsf:id="formGroupDistrito" >
+												
+												<div class="row">
+													<div class="col-md-10">
+														<label class="control-label">Distrito</label>
+														
+														<h:selectOneMenu id="distrito" styleClass="selectpicker " 
+															pt:data-style="select-with-transition" pt:data-size="7" 
+															value="#{cadastroUnidadeEnsinoBean.distritoSelecionado}" 
+															required="true" requiredMessage="Campo DISTRITO é obrigatório">
+															
+															<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true" />
+												   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listDistritos}" 
+												   				var="d" itemValue="#{d}" itemLabel="#{d.nome}"/>
+												   			
+												   		</h:selectOneMenu>
+													
+													</div>
+													
+													<h:panelGroup id="btnModalCadastroDistrito" rendered="#{not empty cadastroUnidadeEnsinoBean.cidadeSelecionada}">
+													
+														<div class="col-md-1" style="padding-top: 12px;">
+														
+													   		<a class="btn btn-primary " data-toggle="modal" data-target="#modalCadastroDistrito"
+													   			data-backdrop="static" data-keyboard="false">
+											                   <i class="material-icons">add_circle_outline</i>
+											                </a>
+											                
+														</div>
+													
+													</h:panelGroup>
+												   		
+												
+												</div> <!-- fim row -->
+											   		
+											</div> <!-- fim form-group -->
+										   		
+										</div> <!-- fim col -->
+										
+									</div>
+									
+									<div class="row">
+									
+										<div class="col-md-6">
+											<div class="form-group label-floating">
+												<label class="control-label">Logradouro</label>
+												<input jsf:id="endereco" type="text" class="form-control"
+													jsf:value="#{cadastroUnidadeEnsinoBean.endereco.logradouro}"/>
+											</div>
+										</div>
+										
+										<div class="col-md-2">
+											<div class="form-group label-floating">
+												<label class="control-label">Nº</label>
+												<input jsf:id="numero" type="text" class="form-control"
+													jsf:value="#{cadastroUnidadeEnsinoBean.endereco.numero}"/>
+											</div>
+										</div>
+										
+										<div class="col-md-4">
+											<div class="form-group label-floating">
+												<label class="control-label">Complemento</label>
+												<input jsf:id="complemento" type="text" class="form-control"
+													jsf:value="#{cadastroUnidadeEnsinoBean.endereco.complemento}"/>
+											</div>
+										</div>
+										
+									</div>
+									
+									<div class="row">
+										
+										<div class="col-md-4">
+											<div class="form-group label-floating">
+												<label class="control-label">Bairro</label>
+												<input jsf:id="bairro" type="text" class="form-control"
+													jsf:value="#{cadastroUnidadeEnsinoBean.endereco.bairro}"/>
+											</div>
+										</div>
+										
+										
+										
+										<div class="col-md-4">
+										
+											<div class="form-group label-floating">
+													
+												<label class="control-label">Localização/Zona</label>
+												<h:selectOneMenu id="zona" styleClass="select form-control" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.zona}" 
+													required="true" requiredMessage="Campo Localização/Zona é obrigatório">
+													
+										   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listZona}" 
+										   				var="z" itemValue="#{z}" itemLabel="#{z.descricao}"/>
+										   				
+										   				
+										   		</h:selectOneMenu>
+												
+											</div>
+											
+										</div>
+									
+									</div>
+									
+									<div class="row">
+	
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												<label class="control-label">Telefone</label>
+												<h:inputText pt:name="telefone"  id="telefone" 
+													styleClass="form-control js-mask-phone" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.telefone}"
+													/>  
+												
+											</div>
+										</div>
+										
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												<label class="control-label">Telefone Público</label>
+												<h:inputText pt:name="telefonePublico"  id="telefonePublico" 
+													styleClass="form-control js-mask-phone" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.telefonePublico}"
+													/>  
+												
+											</div>
+										</div>
+										
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												<label class="control-label">Outro Telefone</label>
+												<h:inputText pt:name="outroTelefone"  id="outroTelefone" 
+													styleClass="form-control js-mask-phone" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.telefoneContato}"
+													/>  
+												
+											</div>
+										</div>
+										
+										<div class="col-md-3">
+											<div class="form-group label-floating">
+												<label class="control-label">Fax</label>
+												<h:inputText pt:name="fax"  id="fax" 
+													styleClass="form-control js-mask-phone" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.fax}"
+													/>  
+												
+											</div>
+										</div>
+										
+									</div>
+									
+									<div class="row">
+										
+										<div class="col-md-12">
+										
+											<div class="form-group label-floating">
+												<label class="control-label">E-Mail</label>
+												<h:inputText pt:name="email"  id="email" styleClass="form-control"
+													style="text-transform: lowercase;" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.email}"
+													/>  
+												
+											</div>
+											
+										</div>
+										
+									</div>
+									
+									
+									<div class="row">
+									
+										<div class="col-md-6">
+											<div jsf:id="formGroupOrgaoRegional" class="form-group">
+											
+												<div class="row">
+													<div class="col-md-9">
+														<label class="control-label">Orgão Regional de Ensino</label>
+														<h:selectOneMenu id="orgaoRegionalEnsino" styleClass="select form-control" 
+															value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.orgaoRegional}" 
+															required="true" requiredMessage="Campo ORGÃO REGIONAL DE ENSINO é obrigatório">
+															
+															<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+												   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listOrgaoRegionalEnsino}" 
+												   				var="ore" itemValue="#{ore}" itemLabel="[ #{ore.codigo} ] #{ore.nome}"/>
+												   				
+												   		</h:selectOneMenu>
+													</div>
+													
+													<div class="col-md-2" style="padding-top: 10px;" >
+												   		<a class="btn btn-primary " data-toggle="modal" data-target="#modalCadastroOrgaoRegional"
+										                	data-backdrop="static" data-keyboard="false">
+										                   <i class="material-icons">add_circle_outline</i>
+										                </a>
+													</div>
+												
+												</div>
+											   		
+										   		
+										   	</div>
+									   		
+										</div>
+										
+										<div class="col-md-6" >
+										
+											<div class="form-group">
+													
+												<label class="control-label">Dependência Administrativa</label>
+												<h:selectOneMenu id="dependenciaAdministrativa" styleClass="select form-control" 
+													value="#{cadastroUnidadeEnsinoBean.unidadeEnsino.dependenciaAdministrativa}" 
+													required="true" requiredMessage="Campo DEPENDÊNCIA ADMINISTRATIVA é obrigatório">
+													
+													<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+										   			<f:selectItems value="#{cadastroUnidadeEnsinoBean.listDependenciaAdministrativa}" 
+										   				var="d" itemValue="#{d}" itemLabel="#{d.descricao}"/>
+										   				
+										   		</h:selectOneMenu>
+												
+											</div>
+										
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="modal-footer">
+													<h:commandButton styleClass="btn btn-simple" value="Novo"
+														action="#{cadastroUnidadeEnsinoBean.novaUnidadeEnsino()}">
+														<p:ajax process="@this" update="@form, scripts"  />
+													</h:commandButton>
+													
+													<h:commandButton styleClass="btn btn-fill btn-primary" style="margin: 0px !important;" 
+														value="Salvar" action="#{cadastroUnidadeEnsinoBean.salvarUnidadeEnsino()}">
+														
+														<p:ajax process="@form" update="@form, :frmUnidadesEnsinoCadastradas, scripts" 
+															onstart="amges.showDialog('processando')"
+															oncomplete="amges.showDialog('close')" 
+															/>
+														
+													</h:commandButton>
+												
+												
+												</div>
+											
+											</div>
+										</div>
+										
+									</div>
+									
+								</h:form>
+							
+								</div> <!-- fim tab-pane -->
+								
+                                <div class="tab-pane" id="registrosUnidadeEscolar">
+                                	
+                                	<h:form id="frmUnidadesEnsinoCadastradas">
+									
+										<div class="row">
+											<div class="col-md-6 ">
+											
+												<div class="form-group label-floating">
+													<label class="control-label">Pesquisar Unidade de Ensino</label>
+													<div class="input-group">
+		
+														<h:inputText id="pesquisaNome" styleClass="form-control"
+															value="#{cadastroUnidadeEnsinoBean.filtro.nome}"/>
+														
+														<div class="input-group-addon">
+															<p:commandLink update="tblUnidadeEnsino" process="@form" >
+																<i class="material-icons">search</i>
+															</p:commandLink>
+														</div>
+													
+													</div>
+												</div>
+												
+											</div>
+										
+										</div>
+										<br/>
+										<p:dataTable value="#{cadastroUnidadeEnsinoBean.model}" lazy="true" var="ue" 
+											paginator="true" paginatorPosition="bottom" rows="10" id="tblUnidadeEnsino"
+											tableStyleClass="table table-striped"  reflow="true"
+											paginatorTemplate="{CurrentPageReport} {PageLinks} {RowsPerPageDropdown}" 
+											rowsPerPageTemplate="5,10,15"
+											currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} 
+												- Página: {currentPage}/{totalPages} ]"
+											style="font-size: 1.2rem;">
+											
+											<p:column width="70" style="text-align: center;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">INEP</span>
+												</f:facet>
+												
+												<h:outputText value="#{ue.inep}"/>
+											</p:column>
+											
+											<p:column width="250" sortBy="#{ue.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">UNIDADE</span>
+												</f:facet>
+												
+												<h:outputText value="#{ue.nome}"/>
+											</p:column>
+											
+											<p:column width="100" style="text-align: center;" sortBy="#{ue.endereco.distrito}">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">DISTRITO</span>
+												</f:facet>
+												
+												<h:outputText value="#{ue.endereco.distrito.nome}"/>
+											</p:column>
+											
+											<p:column width="50" style="text-align: center;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">ZONA</span>
+												</f:facet>
+												
+												<h:outputText value="#{ue.zona.descricao}"/>
+											</p:column>
+											
+											<p:column width="70">
+												
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">FONE</span>
+												</f:facet>
+												
+												<h:outputText value="#{ue.telefone}"/>
+											</p:column>
+											
+											<p:column width="10%" styleClass="td-actions text-right">
+												
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">AÇÕES</span>
+												</f:facet>
+												
+												<p:commandLink pt:rel="tooltip" styleClass="btn btn-success btn-simple"
+													process="@form" update="@form, :frmCadastroUnidadeEnsino, scripts"
+													action="#{cadastroUnidadeEnsinoBean.editarUnidadeEnsino()}">
+                                                    <i class="material-icons">edit</i>
+                                                    
+                                                    <f:setPropertyActionListener
+														target="#{cadastroUnidadeEnsinoBean.unidadeEnsino}"
+														value="#{ue}" 
+														/>
+                                                    
+                                                </p:commandLink>
+												
+												<p:commandLink styleClass="btn btn-simple btn-danger btn-icon remove" 
+													pt:data-toggle="modal" pt:data-target="#modalExcluirUnidadeEnsino"
+										   			pt:data-backdrop="static" pt:data-keyboard="false"
+										   			update=":frmExcluirCadastroUnidadeEnsino">
+								                   
+								                   <i class="material-icons">close</i>
+								                   
+								                   <f:setPropertyActionListener
+														target="#{cadastroUnidadeEnsinoBean.unidadeEnsinoSelecionada}"
+														value="#{ue}"/>
+								                   
+								                </p:commandLink>
+
+											</p:column>
+											
+										</p:dataTable>
+										
+										
+                                	</h:form>
+                                	
+                                </div>
+                                
+							</div> <!-- fim tab-content -->
+							
+							
+						</div> <!-- fim card-content --> 
+						
+					
+					</div> <!-- fim card -->
+				
+				</div> <!-- fim col --> 
+			
+			</div> <!-- fim content-fluid -->
+		
+		
+		</div> <!-- fim content -->
+		
+		
+		<!-- MODAIS -->
+		
+		<ui:include src="/gestaoescolar/modals/excluirUnidadeTrabalho.xhtml" />
+		
+			
+	</ui:define>
+	
+</ui:composition>

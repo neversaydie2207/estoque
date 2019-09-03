@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>LOTUS</title>
+</head>
+  <body>
+  <table align="center" border="0" width="640" style="border:none; border-top:5px solid #5cb860; border-collapse:collapse;">
+  		<tbody>
+        	<tr>
+            	<td height="1" style="font-size:0px;line-height:0px">&nbsp;</td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center"><h1 style="color: #57595b">SECRETARIA MUNICIPAL DE SAÚDE</h1></td>
+            </tr>
+        </tbody>
+        <tbody>
+        	<tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center" style="font-size:18px; font-weight:400; font-family:Georgia, 'Times New Roman', Times, serif;">
+                	Olá <strong>$usuario.nome</strong>, problemas com seu acesso?
+                  <br/>
+                  Se foi você que solicitou esta recuperação de senha, por favor, clique em
+                  
+              </td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+        </tbody>
+        <tbody>
+
+            <tr>
+            	<td align="center">
+                	<a href="http://saude.itapipoca.ce.gov.br/lotus/novasenha.jsf?token=$token"
+                                    style="font-size:14px;
+                                    	   font-family:Helvetica,Arial,sans-serif;
+                                           color:#ffffff;
+                                           line-height:14px;
+                                           text-decoration:none;
+                                           color:#ffffff;
+                                           text-decoration:none;
+                                           border-radius:5px;
+                                           padding:15px 10px;
+                                           display:inline-block;
+                                           letter-spacing:1px;
+                                           text-align:center;
+                                           font-weight:bold;
+                                           text-transform:uppercase;
+                                           width:250px;
+                                           background:#5cb860;" target="_new">Cadastrar Nova Senha</a>
+                </td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+
+            <tr>
+				        <td align="center" valign="middle" style="border-top:solid 1px #5cb860;">&nbsp;
+
+                </td>
+            </tr>
+
+
+          
+        </tbody>
+  </table>
+  </body>
+</html>

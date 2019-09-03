@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Lotus WEB</title>
+  <style>
+
+        @import url('https://fonts.googleapis.com/css?family=Poppins');
+      
+  </style>
+</head>
+  <body>
+  <table align="center" border="0" width="640" style="border:none; border-top:5px solid #003862;">
+
+          <tr>
+              <td height="1" style="font-size:0px;line-height:0px">&nbsp;</td>
+          </tr>
+
+          <tr>
+              <td>&nbsp;</td>
+          </tr>
+          
+          <tr>
+              <td align="center"><img src="http://saude.itapipoca.ce.gov.br/images/logo-pmi-sesa.png" /> </td>
+          </tr>
+      
+          <tr>
+              <td>&nbsp;</td>
+          </tr>
+
+          <tr>
+              <td align="center" style="font-size:18px; font-family:Poppins, Georgia, 'Times New Roman', Times, serif;">
+                  
+                  <span>Olá Sr(a) <strong>$usuario.apelido</strong>,</span>
+                  <br/>
+
+                  <span>Você se cadastrou no Lotus WEB!</span> 
+                  <br/>
+                  <span>Sistema Integrado de Gestão e Lotação de Servidores</span>
+                  <br/>
+                  <span>Secretaria de Saúde de Itapipoca</span>
+                  <br/>
+                  
+                  <p>
+                    Antes de começar a usar nossa plataforma é necessário
+                  </p>
+                  
+              </td>
+          </tr>
+           
+           
+          <tr>
+              <td align="center">
+                  <a href="http://saude.itapipoca.ce.gov.br/lotus/validaremail.jsf?cc=$usuario.cc"
+                        style="font-size:14px;
+                            font-family:Poppins, Helvetica,Arial,sans-serif;
+                            color:#ffffff;
+                            line-height:14px;
+                            text-decoration:none;
+                            color:#ffffff;
+                            text-decoration:none;
+                            border-radius:5px;
+                            padding:15px 10px;
+                            display:inline-block;
+                            letter-spacing:1px;
+                            text-align:center;
+                            font-weight:bold;
+                            text-transform:uppercase;
+                            width:250px;
+                            background:#e88400;" target="_new">Ativar sua Conta</a>
+                </td>
+            </tr>
+
+            <tr>
+            	  <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+				        <td align="center" valign="middle" style="border-top:5px solid #003862; ">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <th align="center" >Qualquer dúvida, entre em contato</td>
+            </tr>
+            <tr>
+              <td align="center" >giordano221@gmail.com</td>
+            </tr>
+
+  </table>
+
+  </body>
+</html>

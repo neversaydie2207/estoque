@@ -1,0 +1,121 @@
+<ui:composition template="/WEB-INF/template/layout-full-page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="metadata">
+		
+		<f:metadata>
+			<f:viewAction action="#{recuperaSenhaBean.initTokenRecuperarSenha()}"/>
+		</f:metadata>
+		
+	</ui:define>
+	
+	<ui:define name="navbar-buttons">
+
+		
+        		
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	
+		<div class="full-page login-page" filter-color="black" data-image="#{request.contextPath}/resources/images/bkg-login.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+            
+                <div class="container">
+                
+	                <div class="row">
+						<div class="col-md-8 col-md-offset-2">
+			
+							<div class="card card-login card-hidden" style="padding: 30px;">
+								<h2 class="card-title text-center">Está tendo problemas de acesso?</h2>
+								
+								<h:form id="frmCadastrarNovaSenha" >
+									
+									<div class="col-md-12">
+										<h:messages errorClass="alert alert-danger " infoClass="alert alert-info" 
+											warnClass="alert alert-warning"  showSummary="true" layout="list"/>
+									</div>
+									 
+									<ui:fragment rendered="#{empty recuperaSenhaBean.email}">
+									
+										<div class="content">
+											
+											<div class="col-md-5">
+												<div class="content" >
+													<h5 class="description text-center">Por favor, informe seu e-mail e enviaremos os próximos passos para recuperar seu acesso novamente </h5>
+												</div>
+											</div>
+											
+											<div class="col-md-7">
+											
+												<div class="col-md-12">
+													<div class="input-group">
+														<span class="input-group-addon"> 
+															<i class="material-icons fa-lg">mail_outline</i>
+														</span> 
+														<h:inputText id="email" pt:type="email" style="text-transform: none !important" 
+															pt:placeholder="Informe seu e-mail de acesso" styleClass="form-control"
+															value="#{recuperaSenhaBean.email}" 
+															required="true" requiredMessage="Campo E-Mail é Obrigatório."/>
+													</div>
+												</div>
+												
+											</div>
+											
+										</div>
+										
+									</ui:fragment>
+									
+									<div class="footer text-center">
+									
+										<ui:fragment rendered="#{empty recuperaSenhaBean.email}">
+										
+											<h:commandButton  styleClass="btn btn-primary btn-fill" 
+												value="ENVIAR" action="#{recuperaSenhaBean.enviarTokenOnEmail()}">
+												
+												<p:ajax process="@form" update="@form"
+													onstart="amges.showDialog('processando')"
+													oncomplete="if(args.isValid){amges.showDialog('solicita-senha-success')}else{amges.showDialog('close')}" 
+													onerror="amges.showDialog('error-message')"
+													/>
+												
+											</h:commandButton>
+										</ui:fragment> 
+										
+										<ui:fragment rendered="#{!empty recuperaSenhaBean.email}">
+										
+											<h:button outcome="/login.jsf"  styleClass="btn btn-primary btn-fill" 
+												value="OK"/>
+										</ui:fragment> 
+										
+											
+									</div>
+									
+								</h:form>
+									
+							</div> <!-- fim card -->
+									
+						</div> <!-- fim col -->
+									
+					</div> <!-- fim row -->
+                
+            	</div> <!-- fim container -->
+            	
+            </div> <!-- fim content -->
+            
+            <ui:insert name="footer">
+   				<ui:include src="WEB-INF/template/fragments/footer-full-page.xhtml" />
+   			</ui:insert>
+           
+           	
+		</div> <!-- fim fullpage -->
+		
+	</ui:define>
+	
+</ui:composition>

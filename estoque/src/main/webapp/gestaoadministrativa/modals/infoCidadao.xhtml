@@ -1,0 +1,138 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:mp="http://primefaces.org/ui/material">
+
+	<div class="modal fade" id="modalInformacoesDoCidadao" tabindex="-1" role="dialog" 
+          		aria-labelledby="modalInformacoesDoCidadao" aria-hidden="true">
+          		
+		<div class="modal-dialog modal-large">
+		
+			<div class="modal-content">
+				<div class="modal-header">
+				
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="material-icons">clear</i>
+					</button>
+					
+					<h4 class="modal-title"><strong>Informações do Cidadão</strong></h4>
+				</div>
+				
+			    <h:form id="frmInformacoesDocidadao">
+				
+					<div class="modal-body">
+						
+						<div class="row">
+							
+							<div class="col-md-9">
+
+								<div class="row">
+								
+									<div class="col-md-3">
+										<div class="form-group ">
+											<label class="control-label">CPF <small>*</small></label>
+											<h:inputText id="cpf" styleClass="form-control js-mask-cpf"
+												value="#{infoCidadaoBean.cidadao.cpf}" 
+												disabled="true"/>
+										</div>
+									</div>
+									
+									
+									<div class="col-md-6">
+										<div class="form-group ">
+											<label class="control-label">Nome do Cidadão</label>
+											<h:inputText id="nomecidadao" styleClass="form-control"
+												value="#{infoCidadaoBean.cidadao.nome}"
+												disabled="true"/>
+											
+										</div>
+									</div>
+									
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label">Data de Nascimento </label>
+											<h:inputText id="nascimento" styleClass="form-control js-mask-data"  
+												value="#{infoCidadaoBean.cidadao.dataNascimento}"
+												disabled="true">
+												
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+												
+											</h:inputText>
+											
+										</div>
+									</div>
+									
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label">Fone </label>
+											<h:inputText id="fone" styleClass="form-control"  
+												value="#{infoCidadaoBean.cidadao.celular}"
+												disabled="true">
+												
+											</h:inputText>
+											
+										</div>
+									</div>
+									
+									<div class="col-md-9">
+										<div class="form-group">
+											<label class="control-label">Endereço Residencial </label>
+											<h:inputText id="endereco" styleClass="form-control"  
+												value="#{infoCidadaoBean.cidadao.endereco.enderecoCompleto}" 
+													
+												disabled="true">
+												
+											</h:inputText>
+											
+										</div>
+									</div>
+									
+								</div> <!-- fim row informacoes do cidadao -->
+								
+							
+							</div> <!-- fim coluna esquerda - informacoes -->
+							
+							<!-- FOTO cidadao -->
+							<div class="col-md-3" style="padding-top: 35px;">
+								
+								<div class="card card-product" align="center">
+										
+									<div class="card-image" 
+										style="height: 145px !important; width: 147px !important;">
+										<img src="data:image/png;base64,#{infoCidadaoBean.cidadao.imagemFoto}" 
+											jsf:id="foto"/>
+									</div>
+									<div class="card-content" >
+										<span>FOTO</span>
+										
+									</div>
+								
+								</div> <!-- fim card -->
+								
+							</div>
+							
+						</div> <!-- FIM ROW -->
+						
+						
+					</div> <!-- FIM MODAL BODY -->
+					
+					<div class="modal-footer">
+						<h:commandButton styleClass="btn btn-simple" pt:data-dismiss="modal" value="OK"/>
+							
+					</div>
+					
+			    </h:form>  
+				
+			</div>
+		
+		</div>
+		
+	</div>
+		
+</ui:composition>

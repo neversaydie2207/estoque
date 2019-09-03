@@ -1,0 +1,61 @@
+<ui:composition template="/WEB-INF/template/layout-full-page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">	
+
+	
+	<ui:define name="conteudo">
+	
+		<div class="full-page login-page" filter-color="black" data-image="#{request.contextPath}/resources/layout/img/login-v1.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+            
+                <div class="container">
+                
+	                <div class="row">
+						<div class="col-md-10 col-md-offset-1">
+			
+							<div class="card card-login card-hidden" style="padding: 30px;">
+								<h2 class="card-title text-center">Obrigado por se cadastrar!</h2>
+								
+								<h3 class="text-center">
+									Em alguns instantes você receberá um e-mail para ativação de sua conta 
+									<br/>
+									<small>Acesse seu e-mail e siga as instruções para completar seu cadastro</small>
+								</h3>
+								
+								<br/>
+								
+								<h4 class="text-center">
+									<small>Atenciosamente,</small>
+									<br/>
+									<small>PRONATEC</small>
+									<br/>
+									<small>SECRETARIA DA EDUCAÇÃO DO CEARÁ - SEDUC</small>
+								</h4>
+								
+				
+							</div> <!-- fim card -->
+									
+						</div> <!-- fim col -->
+									
+					</div> <!-- fim row -->
+                
+            	</div> <!-- fim container -->
+            	
+            </div> <!-- fim content -->
+            
+            <ui:insert name="footer">
+   				<ui:include src="WEB-INF/template/fragments/footer-full-page.xhtml" />
+   			</ui:insert>
+           
+           	
+		</div> <!-- fim fullpage -->
+		
+	</ui:define>
+	
+</ui:composition>

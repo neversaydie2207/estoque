@@ -1,0 +1,860 @@
+<ui:composition template="/WEB-INF/template/layout-dashboard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="dummy"/>
+			<f:viewAction action="#{cadastroCidadaoBean.init()}"/>
+		</f:metadata>
+			
+	</ui:define>
+	
+	<ui:define name="navbar-title">
+		<a class="navbar-brand" href="#" > Cidadãos </a>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		
+		<div class="content">
+			<div class="container-fluid">
+				
+				<div class="col-md-12">
+					
+					<div class="card">
+						
+						<div class="card-header" data-background-color="green">
+							<i class="material-icons">account_circle</i>
+							<h4 class="title white-text">Cadastrar Cidadão </h4>
+							<p class="category">Insira os dados do Cidadão Itapipoquense</p>
+							
+						</div>
+						
+						<div class="card-content">
+							
+							
+							<div class="tab-content">
+                                <div id="tabCadastro" class="tab-pane active" style="padding: 20px;">
+                                
+									<h:form id="frmCadastro" enctype="multipart/form-data"  >
+										
+										<div class="row">
+										
+											<div class="col-md-12">
+												
+												<h:panelGroup id="grupoMsg">
+												
+													<ui:include src="/WEB-INF/template/fragments/messages/alert-messages.xhtml" />
+											    	
+												</h:panelGroup>
+											</div>
+											
+										</div>
+										
+										
+										<div class="row">
+											
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold;">Informações Pessoais</h4>
+											</div>
+											
+											<div class="row">
+												<div class="col-md-9">
+													
+													<div class="col-md-4">
+														<div class="form-group ">
+															<label class="control-label">CPF <small>*</small></label>
+															<h:inputText id="cpf" styleClass="form-control js-mask-cpf"
+																value="#{cadastroCidadaoBean.cidadao.cpf}" 
+																required="true" requiredMessage="Campo CPF é obrigatório"
+																disabled="#{not empty cadastroCidadaoBean.cidadao.cpf}">
+																
+																<p:ajax event="blur" listener="#{cadastroCidadaoBean.pesquisarPorCpf()}"
+																		update="@form scripts" />
+																
+															</h:inputText>
+		
+															<p:focus for="cpf" />
+														</div>
+													</div>
+												
+													<div class="col-md-8">
+														<div class="form-group ">
+															<label class="control-label">Nome Completo <small>*</small></label>
+															<h:inputText id="nomeAluno" styleClass="form-control"
+																value="#{cadastroCidadaoBean.cidadao.nome}"
+																required="true" requiredMessage="Campo NOME DO CIDADAO é obrigatório"/>
+															
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="control-label">Data de Nascimento <small>*</small></label>
+															<h:inputText id="nascimento" styleClass="form-control js-mask-data"  
+																value="#{cadastroCidadaoBean.cidadao.dataNascimento}"
+																required="true" requiredMessage="Campo DATA DE NASCIMENTO é Obrigatório.">
+																
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																
+															</h:inputText>
+															
+														</div>
+													</div>
+													
+													<div class="col-md-3">
+												
+														<div class="form-group">
+														
+															<label class="control-label">UF NASCIMENTO <small>*</small></label>
+															
+															<h:selectOneMenu id="ufNascimento" styleClass="select form-control " 
+																pt:data-style="select-with-transition" pt:data-size="7" 
+																value="#{cadastroCidadaoBean.cidadao.ufNascimento}" 
+																required="true" requiredMessage="Campo UF NASCIMENTO é obrigatório">
+																
+																<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+													   			<f:selectItems value="#{cadastroCidadaoBean.listEstados}" 
+													   				var="uf" itemValue="#{uf}" itemLabel="#{uf.uf}"/>
+													   			
+													   			<p:ajax listener="#{cadastroCidadaoBean.listarCidadesNascimento()}" 
+																	onstart="amges.showDialog('buscando')" oncomplete="amges.showDialog('close')"
+																	update="grupoMunicipioNascimento scripts" />
+													   			
+													   		</h:selectOneMenu>
+													   		
+														</div>
+															
+													</div>
+													
+													<div class="col-md-5">
+														<h:panelGroup id="grupoMunicipioNascimento">
+														
+															<div class="form-group">
+													
+																<label class="control-label">MUNICÍPIO NASCIMENTO <small>*</small></label>
+															
+																<p:autoComplete id="municipioNascimento" 
+																	value="#{cadastroCidadaoBean.cidadao.cidadeNascimento}" 
+																	completeMethod="#{cadastroCidadaoBean.completaCidadeNascimento}"
+																	var="c" itemLabel="#{c.nome}" itemValue="#{c}" forceSelection="true"
+																	styleClass="form-control" inputStyleClass="form-control-autocomplete" maxResults="7"
+																	required="true" requiredMessage="Campo MUNICÍPIO NASCIMENTO é obrigatório"
+																	disabled="#{cadastroCidadaoBean.cidadao.ufNascimento == null}">
+																	
+																</p:autoComplete>
+																			
+															</div>	
+															
+													   	</h:panelGroup>
+															
+													</div>
+													
+													<div class="col-md-6">
+										
+														<div class="form-group">
+														
+															<label class="control-label">ETNIA <small>*</small></label>
+																
+															<h:selectOneMenu id="etnia" styleClass="select form-control" 
+																pt:data-style="select-with-transition" pt:data-size="7" 
+																value="#{cadastroCidadaoBean.cidadao.etnia}" required="true" 
+																requiredMessage="Campo ETNIA é Obrigatório">
+																
+																<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+																
+													   			<f:selectItems value="#{cadastroCidadaoBean.listEtnia}" 
+													   				var="e" itemValue="#{e}" itemLabel="#{e.descricao}"/>
+																                     
+													   		</h:selectOneMenu>
+																
+														</div>
+														
+													</div>
+													
+													<div class="col-md-6">
+														
+														<div class="form-group">
+														
+															<label class="control-label">SEXO <small>*</small></label>
+																
+															<h:selectOneMenu id="sexo" styleClass="select form-control" 
+																pt:data-style="select-with-transition" pt:data-size="7" 
+																value="#{cadastroCidadaoBean.cidadao.sexo}" required="true" 
+																requiredMessage="Campo SEXO é Obrigatório">
+																
+																<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+																
+													   			<f:selectItems value="#{cadastroCidadaoBean.listSexo}" 
+													   				var="s" itemValue="#{s}" itemLabel="#{s.nome}"/>
+													   				
+													   			<p:ajax update="reservista" resetValues="true"/>
+																                     
+													   		</h:selectOneMenu>
+													   		
+														</div>
+															
+														
+													</div>
+												
+												</div> <!-- FIM GRUPO DADOS CIDADAO / FOTO -->
+												
+												<!-- FOTO cidadao -->
+												<div class="col-md-3">
+													
+													<div class="card card-product" align="center">
+															
+														<div class="card-image" 
+															style="height: 145px !important; width: 147px !important;">
+															<img src="data:image/png;base64,#{cadastroCidadaoBean.cidadao.imagemFoto}" 
+																jsf:id="foto"/>
+														</div>
+														
+														<div class="card-content" >
+															<span>Foto do Cidadão</span>
+															
+															<o:inputFile id="file" styleClass="filestyle input-group-custom" 
+																value="#{cadastroCidadaoBean.arquivoFoto}"
+																pt:data-input="false" pt:data-icon="false"
+																pt:data-buttonText="Carregar Foto" 
+																pt:data-badge="false" 
+																pt:data-buttonName="btn-warning" 
+																accept="image/*" maxsize="#{0.060 * 1024 * 1024}" 
+																maxsizeMessage="Tamanho do arquivo maior que o permitido! ({2})"
+																required="#{empty cadastroCidadaoBean.cidadao.foto}" requiredMessage="Campo FOTO DO CIDADAO é Obrigatório.">
+														
+																<f:ajax execute="@this" listener="#{cadastroCidadaoBean.uploadFoto()}"
+																	render="foto" />
+															 
+															</o:inputFile>	
+															
+															<span class="red-text">
+															 	<strong><h:message id="messageForFile" for="file" /></strong>
+															</span> 
+																											
+														</div>
+													
+													</div> <!-- fim card -->
+													
+												</div>
+												
+												
+											</div>
+											
+											
+										</div> <!-- fim row -->
+										
+										
+										<div class="row">
+											
+											
+										</div> <!-- FIM ROW -->
+										
+										<div class="row" >
+											<div class="col-md-8">
+												<div class="form-group ">
+													<label class="control-label">Nome da Mãe <small>*</small></label>
+													<h:inputText id="nomeMae" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.nomeMae}"
+														required="true" requiredMessage="Campo NOME DA MÃE é obrigatório"/>
+													
+												</div>
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+													</span> 
+													<div class="form-group ">
+													<label class="control-label">Nascimento Mãe</label>
+													<h:inputText id="nascimentoMae" styleClass="form-control js-mask-data"  
+														value="#{cadastroCidadaoBean.cidadao.dataNascimentoMae}">
+														
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+														
+													</h:inputText>
+													</div>
+												</div>
+											</div>
+											
+										</div>
+										
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group ">
+													<label class="control-label">Nome do Pai</label>
+													<h:inputText id="nomePai" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.nomePai}"
+														/>
+													
+												</div>
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+													</span> 
+													<div class="form-group ">
+													<label class="control-label">Nascimento Pai</label>
+													<h:inputText id="nascimentoPai" styleClass="form-control js-mask-data"  
+														value="#{cadastroCidadaoBean.cidadao.dataNascimentoPai}">
+														
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+														
+													</h:inputText>
+													</div>
+												</div>
+											</div>
+											
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+										
+											<div class="col-md-3">
+												
+												<div class="form-group">
+													<label class="control-label">Número da Identidade <small>*</small></label>
+													<h:inputText id="numeroIdentidade" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.identidade}" 
+														required="true" requiredMessage="Campo NÚMERO DA IDENTIDADE é Obrigatório"/>
+
+												</div>
+												
+											</div>
+											
+											
+											<div class="col-md-3">
+											
+												<div class="form-group">
+														
+													<label class="control-label">ORGÃO EMISSOR <small>*</small></label>
+													<h:selectOneMenu id="orgaoEmissor" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.orgaoEmissorIdentidade}" 
+														required="true" requiredMessage="Campo ORGÃO EMISSOR é obrigatório">
+														
+														<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+														
+											   			<f:selectItems value="#{cadastroCidadaoBean.listOrgaoEmissor}" 
+											   				var="oe" itemValue="#{oe}" itemLabel="#{oe.nome} - #{oe.descricao}"/>
+														                     
+											   		</h:selectOneMenu>
+													
+												</div>
+												
+											</div>
+											
+											<div class="col-md-3">
+												<div class="form-group">
+												
+													<label class="control-label">UF da Identidade <small>*</small></label>
+														
+													<h:selectOneMenu id="ufIdentidade" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.ufIdentidade}" 
+														required="true" requiredMessage="Campo ORGÃO EMISSOR é obrigatório">
+														
+														<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+														
+											   			<f:selectItems value="#{cadastroCidadaoBean.listEstados}" 
+											   				var="e" itemValue="#{e}" itemLabel="#{e.uf}"/>
+														                     
+											   		</h:selectOneMenu>
+											   		
+												</div>
+												
+											</div>
+											
+											<div class="col-md-3">
+												
+												<div class="form-group">
+													<label class="control-label">Data de Expedição <small>*</small></label>
+													<h:inputText id="dataExpedicaoIdentidade" styleClass="form-control js-mask-data"  
+														value="#{cadastroCidadaoBean.cidadao.dataExpedicaoIdentidade}"
+														required="true" requiredMessage="Campo DATA DE EXPEDIÇÃO é obrigatório">
+														
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+														
+													</h:inputText>
+													
+												</div>
+												
+											</div>
+										
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+										
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">Título de Eleitor </label>
+													<h:inputText id="tituloEleitor" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.tituloEleitor}"
+														required="false" requiredMessage="Campo TÍTULO DE ELEITOR é Obrigatório" 
+														/>
+
+												</div>
+												
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">Zona </label>
+													<h:inputText id="zonaEleitoral" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.zonaEleitoral}" 
+														required="false" requiredMessage="Campo ZONA é Obrigatório"
+														/>
+
+												</div>
+												
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">Seção</label>
+													<h:inputText id="secaoEleitoral" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.secaoEleitoral}"
+														required="false"
+														requiredMessage="Campo SEÇÃO é Obrigatório" 
+														/>
+
+												</div>
+												
+											</div>
+											
+											<div class="col-md-4">
+												
+												<!--  <div class="form-group">
+													<label class="control-label">RESERVISTA</label>
+													<h:inputText id="reservista" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.reservista}" 
+													  	disabled="#{!cadastroCidadaoBean.cidadao.sexo.nome.equalsIgnoreCase('MASCULINO')}"
+														required="#{cadastroCidadaoBean.cidadao.sexo.nome.equalsIgnoreCase('MASCULINO')}"
+														requiredMessage="Campo RESERVISTA é obrigatório"/>
+
+												</div> -->
+												
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">PIS/PASEP </label>
+													<h:inputText id="pisPasep" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.pisPasep}" 
+														required="false" requiredMessage="Campo PIS/PASEP é obrigatório"/>
+
+												</div>
+												
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">ESTADO CIVIL <small>*</small></label>
+												
+													<h:selectOneMenu id="estadoCivil" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.estadoCivil}" 
+														required="true" requiredMessage="Campo ESTADO CIVIL é obrigatório">
+														
+														<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+											   			<f:selectItems value="#{cadastroCidadaoBean.listEstadoCivil}" 
+											   				var="ec" itemValue="#{ec}" itemLabel="#{ec.descricao}"/>
+											   			
+											   		</h:selectOneMenu>
+											   		
+											   </div>
+											
+											</div>
+											
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold; padding-top: 20px;">Informações Profissionais</h4>
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">Registro Conselho Classe <strong> *</strong></label>
+													<h:inputText id="registroConselhoClasse" styleClass="form-control"
+														value="#{cadastroCidadaoBean.cidadao.registroConselhoClasse}"
+														required="true" requiredMessage="Campo REGISTRO CONSELHO CLASSE é Obrigatório" 
+														/>
+
+												</div>
+												
+											</div>
+											
+											<div class="col-md-6">
+											
+												<div class="form-group">
+														
+													<label class="control-label">ORGÃO EMISSOR RCC<small> *</small></label>
+													<h:selectOneMenu id="orgaoEmissorRcc" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.orgaoEmissorRcc}" 
+														required="true" requiredMessage="Campo ORGÃO EMISSOR RCC é obrigatório"
+														>
+														
+														<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+														
+											   			<f:selectItems value="#{cadastroCidadaoBean.listOrgaoEmissorRcc}" 
+											   				var="oe" itemValue="#{oe}" itemLabel="#{oe.nome} - #{oe.sigla}"/>
+														                     
+											   		</h:selectOneMenu>
+													
+												</div>
+												
+											</div>
+											
+											<div class="col-md-2">
+												
+												<div class="form-group">
+													<label class="control-label">UF RCC<small> *</small></label>
+												
+													<h:selectOneMenu id="ufRcc" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.ufRcc}" 
+														required="true" requiredMessage="Campo UF RCC é obrigatório">
+														
+														<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+															
+											   			<f:selectItems value="#{cadastroCidadaoBean.listEstados}" 
+											   				var="e" itemValue="#{e}" itemLabel="#{e.uf}"/>
+											   		
+											   			
+											   		</h:selectOneMenu>
+											   		
+											   </div>
+												   		
+											</div> 
+										
+										</div>
+										
+										<div class="row">
+										
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold; padding-top: 20px;">Cidadão com Deficiência</h4>
+											</div>
+												
+											<div class="col-md-12">
+												<h3 class="control-label" style="font-size: 1.3rem; font-weight: bold;">TIPO DE DEFICIÊNCIA</h3>
+												
+												<div class="col-md-4">
+													
+													<div class="input-group">
+													
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.baixaVisao}" 
+															styleClass="filled-in" id="defBaixaVisao" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defBaixaVisao">Baixa Visão</label>
+														
+													</div>
+													
+													<div class="input-group">
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.cegueira}" 
+															styleClass="filled-in" id="defCegueira" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defCegueira">Cegueira</label>
+													</div>
+													
+													<div class="input-group">
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.deficienciaAuditiva}" 
+															styleClass="filled-in" id="defAuditiva" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defAuditiva">Deficiência Auditiva</label>
+													</div>
+													
+												</div> <!-- fim col 1 -->
+												
+												<div class="col-md-4">
+													
+													<div class="input-group">
+													
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.deficienciaFisica}" 
+															styleClass="filled-in" id="defFisica" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defFisica">Deficiência Física</label>
+														
+													</div>
+													
+													<div class="input-group">
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.deficienciaIntelectual}" 
+															styleClass="filled-in" id="defIntelectual" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defIntelectual">Deficiência Intelectual</label>
+													</div>
+													
+													<div class="input-group">
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.surdez}" 
+															styleClass="filled-in" id="defSurdez" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defSurdez">Surdez</label>
+													</div>
+													
+												</div> <!-- fim col 2 -->
+												
+												<div class="col-md-4">
+													
+													<div class="input-group">
+													
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.surdoCegueira}" 
+															styleClass="filled-in" id="defSurdocegueira" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defSurdocegueira">Surdocegueira</label>
+														
+													</div>
+													
+													<div class="input-group">
+														<h:selectBooleanCheckbox value="#{cadastroCidadaoBean.cidadao.deficienciaMultipla}" 
+															styleClass="filled-in" id="defMultipla" />
+														
+														<label style="font-size: 1.3rem !important;" jsf:for="defMultipla">Deficiência Multipla</label>
+													</div>
+												
+													
+												</div> <!-- fim col 3 -->
+												
+											</div> <!-- FIM DEFICIENCIA -->
+											
+												
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+											
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold; padding-top: 20px;">Endereço Residencial</h4>
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group">
+													<label class="control-label">UF <small>*</small></label>
+												
+													<h:selectOneMenu id="estado" styleClass="select form-control" 
+														pt:data-style="select-with-transition" pt:data-size="7" 
+														value="#{cadastroCidadaoBean.cidadao.endereco.estado}" 
+														required="true" requiredMessage="Campo UF é obrigatório">
+														
+														<f:selectItem itemValue="" itemLabel="Selecione" noSelectionOption="true"/>
+											   			<f:selectItems value="#{cadastroCidadaoBean.listEstados}" 
+											   				var="e" itemValue="#{e}" itemLabel="#{e.uf}"/>
+											   			
+											   			<p:ajax listener="#{cadastroCidadaoBean.listarCidadesEnderecoPorEstado()}" 
+															onstart="amges.showDialog('buscando')" oncomplete="amges.showDialog('close')"
+															update="formGroupCidade scripts"/>
+											   			
+											   		</h:selectOneMenu>
+											   		
+											   </div>
+												   		
+											</div> 
+											
+											<div class="col-md-8">
+												<div jsf:id="formGroupCidade">
+													
+													<div class="form-group">
+											
+														<label class="control-label">Cidade <small>*</small></label>
+													
+														<p:autoComplete id="cidade" value="#{cadastroCidadaoBean.cidadao.endereco.cidade}" 
+															completeMethod="#{cadastroCidadaoBean.completaCidade}"
+															var="c" itemLabel="#{c.nome}" itemValue="#{c}" forceSelection="true"
+															styleClass="form-control" inputStyleClass="form-control-autocomplete" maxResults="4"
+															required="true" requiredMessage="Campo CIDADE é obrigatório"
+															disabled="#{cadastroCidadaoBean.cidadao.endereco.estado == null}">
+															
+														</p:autoComplete>
+															
+													</div>	
+												   		
+												</div> 
+											   		
+											</div>
+											
+											
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+											
+											<div class="col-md-6">
+												<div class="form-group ">
+													<label class="control-label">Logradouro <small>*</small></label>
+													<input jsf:id="endereco" type="text" class="form-control"
+														jsf:value="#{cadastroCidadaoBean.cidadao.endereco.logradouro}"
+														jsf:required="true" jsf:requiredMessage="Campo LOGRADOURO é Obrigatório"/>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group ">
+													<label class="control-label">Nº <small>*</small></label>
+													<input jsf:id="numero" type="text" class="form-control"
+														jsf:value="#{cadastroCidadaoBean.cidadao.endereco.numero}"
+														jsf:required="true" jsf:requiredMessage="Campo Nº DO ENDEREÇO RESIDENCIAL é Obrigatório"/>
+												</div>
+											</div>
+											
+											<div class="col-md-4">
+												<div class="form-group ">
+													<label class="control-label">Complemento </label>
+													<input jsf:id="complemento" type="text" class="form-control"
+														jsf:value="#{cadastroCidadaoBean.cidadao.endereco.complemento}"/>
+												</div>
+											</div>
+											
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+									
+											<div class="col-md-8">
+												<div class="form-group ">
+													<label class="control-label">Bairro <small>*</small></label>
+													<input jsf:id="bairro" type="text" class="form-control"
+														jsf:value="#{cadastroCidadaoBean.cidadao.endereco.bairro}"
+														jsf:required="true" jsf:requiredMessage="Campo BAIRRO é Obrigatório"/>
+												</div>
+											</div>
+											
+											<div class="col-md-4">
+												
+												<div class="form-group ">
+													<label class="control-label">CEP <small>*</small></label>
+													<h:inputText id="cep" styleClass="form-control js-mask-cep"
+														value="#{cadastroCidadaoBean.cidadao.endereco.cep}"
+														required="true" requiredMessage="Campo CEP é obrigatório"
+														/>
+													
+												</div>
+												
+											</div>
+										
+										</div> <!-- FIM ROW -->
+										
+										<div class="row">
+											
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold; padding-top: 20px;">Informações para Contato</h4>
+											</div>
+											
+											<div class="col-md-3">
+												
+												<div class="form-group ">
+													<label class="control-label">Celular <small>*</small></label>
+													<h:inputText id="celular" styleClass="form-control js-mask-celular"
+														value="#{cadastroCidadaoBean.cidadao.celular}"
+														required="true" requiredMessage="Campo Celular é Obrigatório"
+														/>
+												</div>
+												
+											</div>
+											
+											<div class="col-md-3">
+												
+												<div class="form-group ">
+													<label class="control-label">Telefone Fixo </label>
+													<h:inputText id="telefoneFixo" styleClass="form-control js-mask-telefone"
+														value="#{cadastroCidadaoBean.cidadao.telefone}"
+														/>
+												</div>
+												
+											</div>
+											
+											<div class="col-md-6">
+												
+												<div class="form-group ">
+													<label class="control-label">E-Mail</label>
+													<h:inputText id="email" styleClass="form-control" style="text-transform: lowercase !important"
+														value="#{cadastroCidadaoBean.cidadao.email}"
+														/>
+												</div>
+												
+											</div>
+											
+										</div> <!-- FIM ROW -->
+										
+										<!-- FORMACAO ACADEMICA -->
+										<div class="row">
+											
+											<div class="col-md-12">
+												<h4 class="title" style="font-weight: bold; padding-top: 20px;">NÍVEL DE ESCOLARIDADE</h4>
+											</div>
+											
+											<div class="col-md-12">
+											
+												
+											</div>
+											
+										
+										</div> <!-- fim row -->
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="modal-footer">
+												
+													<h:commandButton styleClass="btn btn-simple" value="Novo"
+														action="#{cadastroCidadaoBean.novo()}">
+														<p:ajax process="@this" update="@form scripts"  />
+													</h:commandButton>
+													
+													<h:commandLink  styleClass="btn btn-fill btn-primary" style="margin: 0px !important;" 
+															value="Salvar" action="#{cadastroCidadaoBean.salvar()}" 
+															>
+															
+															<f:ajax execute=":frmCadastro" render=":frmCadastro " resetValues="true" 
+																
+																/>
+														
+													</h:commandLink>
+													
+												
+												</div>
+											
+											</div>
+											
+										</div>
+										
+									</h:form>
+									
+									
+								</div> <!-- fim tab-pane -->
+								
+                                <!-- TAB CIDADAOS CADASTRADOS - EM BREVE -->
+                                
+							</div> <!-- fim tab-content -->
+							
+							
+						</div> <!-- fim card-content --> 
+						
+					
+					</div> <!-- fim card -->
+				
+				</div> <!-- fim col --> 
+			
+			</div> <!-- fim content-fluid -->
+		
+		
+		</div> <!-- fim content -->
+		
+		
+		<!-- MODAIS --> 
+		
+		
+	</ui:define>
+	
+</ui:composition>

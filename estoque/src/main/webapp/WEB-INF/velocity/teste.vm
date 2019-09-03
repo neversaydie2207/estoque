@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>PayPerCash</title>
+</head>
+  <body>
+  <table align="center" border="0" width="640" style="border:none; border-top:5px solid #C36; border-collapse:collapse;">
+  		<tbody>
+        	<tr>
+            	<td height="1" style="font-size:0px;line-height:0px">&nbsp;</td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center"><img src="http://paypercash.com.br/resources/images/logo-280x56.png" /> </td>
+            </tr>
+        </tbody>
+        <tbody>
+        	<tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center" style="font-size:18px; font-weight:400; font-family:Georgia, 'Times New Roman', Times, serif;">
+                	Olá <strong>$nome</strong>, sua conta foi criada com sucesso!
+                  <br/>
+                  Agora você faz parte da nossa comunidade e deu o primeiro passo rumo à facilidade de receber e realizar pagamentos
+                  por Cartão de Crédito ou Boleto Bancário, de forma prática e rápida, através de nossos Vouchers de Pagamentos!
+
+              </td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+            	<td align="center"><img src="http://paypercash.com.br/resources/images/bem-vindo.png" ></td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center" style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:14px;">
+
+              </td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+            <tr>
+            	<td align="center">
+                	<a href="#"
+                                    style="font-size:14px;
+                                    	   font-family:Helvetica,Arial,sans-serif;
+                                           color:#ffffff;
+                                           line-height:14px;
+                                           text-decoration:none;
+                                           color:#ffffff;
+                                           text-decoration:none;
+                                           border-radius:5px;
+                                           padding:15px 10px;
+                                           display:inline-block;
+                                           letter-spacing:1px;
+                                           text-align:center;
+                                           font-weight:bold;
+                                           text-transform:uppercase;
+                                           width:250px;
+                                           background:#CE1053;" target="_new">Ativar Conta</a>
+                </td>
+            </tr>
+            <tr>
+            	<td>&nbsp;</td>
+            </tr>
+
+            <tr>
+				        <td align="center" valign="middle" style="border-top:solid 1px #d7dcdd;">&nbsp;
+
+                </td>
+            </tr>
+
+            <tr>
+              <td align="center">Fa&ccedil;a parte de nossas redes sociais</td>
+            </tr>
+
+            <tr>
+            	<td align="center">
+                  <a href="https://www.facebook.com/paypercashBR/" target="_new">
+                    <img src="http://jadsonlima.890m.com/f.png" width="48" height="48">
+                  </a>
+
+                  <img src="http://jadsonlima.890m.com/t.png" width="48" height="48"></td>
+            </tr>
+
+        </tbody>
+  </table>
+  </body>
+</html>

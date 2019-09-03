@@ -1,0 +1,146 @@
+<ui:composition template="/WEB-INF/template/layout-full-page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="metadata">
+		
+		<f:metadata>
+			<f:viewParam name="token" value="#{recuperaSenhaBean.tokenConfirmacao}"/>
+			<f:viewAction action="#{recuperaSenhaBean.initTokenRecuperarSenha()}"/>
+		</f:metadata>
+		
+	</ui:define>
+	
+	<ui:define name="navbar-buttons">
+
+		
+        		
+	</ui:define>
+	
+	<ui:define name="conteudo">
+	
+		<div class="full-page login-page" filter-color="black" data-image="#{request.contextPath}/resources/images/bkg-agenda.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+            
+                <div class="container">
+                
+	                <div class="row">
+						<div class="col-md-8 col-md-offset-2">
+			
+							<div class="card card-login card-hidden" style="padding: 30px;">
+								<h2 class="card-title text-center">Cadastrar nova senha</h2>
+								
+								<h:form id="frmCadastrarNovaSenha" >
+									
+									<div class="col-md-12">
+										<h:messages errorClass="alert alert-danger " infoClass="alert alert-info" 
+											warnClass="alert alert-warning"  showSummary="true" layout="list"/>
+									</div>
+									 
+									<div class="content">
+										<ui:fragment rendered="#{!recuperaSenhaBean.tokenValidado}">
+										
+											<div class="col-md-5">
+												<div class="content" style="padding-top: 20px;">
+													<h5 class="description text-center">Se você está tendo problemas de acesso, por favor, cadastre uma nova senha. </h5>
+												</div>
+											</div>
+											
+											<div class="col-md-7">
+											
+												<div class="col-md-12">
+													<div class="input-group">
+														<span class="input-group-addon"> 
+															<i class="material-icons fa-lg">lock_outline</i>
+														</span> 
+														<h:inputText id="senha" pt:type="password" style="text-transform: none !important" 
+															pt:placeholder="Nova Senha..." styleClass="form-control"
+															value="#{recuperaSenhaBean.novaSenha}" 
+															required="true" requiredMessage="Campo Senha é Obrigatório.">
+															
+															<f:validateLength minimum="6" />
+															
+														</h:inputText>
+													</div>
+												</div>
+												
+												<div class="col-md-12">
+													<div class="input-group">
+														<span class="input-group-addon"> 
+															<i class="material-icons fa-lg">lock_outline</i>
+														</span>
+														
+														<h:inputText id="confereSenha" pt:type="password" pt:placeholder="Confirmar Nova Senha..." 
+															styleClass="form-control" style="text-transform: none !important"
+															value="#{recuperaSenhaBean.confereSenha}" 
+															required="true" requiredMessage="Campo Confirmar Senha é Obrigatório.">
+															
+															<f:validateLength minimum="6" />
+															
+														</h:inputText>
+														
+													</div>
+												</div>
+												
+											</div>
+										</ui:fragment>
+									</div>
+									
+									<div class="footer text-center">
+										
+										<ui:fragment rendered="#{recuperaSenhaBean.tokenValidado}">
+										
+											<h:button outcome="/login.jsf"  styleClass="btn btn-primary btn-fill" 
+												value="OK"/>
+												
+										</ui:fragment> 
+										
+									
+										<ui:fragment rendered="#{!recuperaSenhaBean.tokenValidado}">
+										
+											<h:commandButton  styleClass="btn btn-primary btn-fill" 
+												value="Cadastrar">
+												
+												<p:ajax process="@form" update="@form, scripts"
+													listener="#{recuperaSenhaBean.validarToken()}" 
+													onstart="amges.showDialog('processando')"
+													oncomplete="if(args.isValid){amges.showDialog('recupera-senha-success')}else{amges.showDialog('close')}" 
+													onerror="amges.showSwal('error-message')"
+													/>
+													
+												
+											</h:commandButton> 
+										
+										</ui:fragment>
+										
+											
+									</div>
+									
+								</h:form>
+									
+							</div> <!-- fim card -->
+									
+						</div> <!-- fim col -->
+									
+					</div> <!-- fim row -->
+                
+            	</div> <!-- fim container -->
+            	
+            </div> <!-- fim content -->
+            
+            <ui:insert name="footer">
+   				<ui:include src="WEB-INF/template/fragments/footer-full-page.xhtml" />
+   			</ui:insert>
+           
+           	
+		</div> <!-- fim fullpage -->
+		
+	</ui:define>
+	
+</ui:composition>

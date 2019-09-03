@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="selecao_perfil::#selecao_perfil.jsf"
+    NAME="output2" PATH="/selecao_perfil.jsf"
+    TARGET="rules:#selecao_perfil.jsf" TITLE="selecao_perfil" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#selecao_perfil.jsf"
+  PATH="/selecao_perfil.jsf" SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

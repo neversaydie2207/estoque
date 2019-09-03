@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/layout-full-page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">	
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="cc" value="#{cadastroUsuarioBean.codigoConfirmacao}"/>
+			<f:viewAction action="#{cadastroUsuarioBean.initCadastroUsuarios()}"/>
+		</f:metadata>
+	</ui:define>
+	
+
+	<ui:define name="conteudo">
+	
+		<div class="full-page login-page" filter-color="black" data-image="#{request.contextPath}/resources/images/bkg-sala-de-aula.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+            
+                <div class="container">
+                
+	                <div class="row">
+						<div class="col-md-10 col-md-offset-1">
+			
+							<div class="card card-login card-hidden" style="padding: 30px;">
+								<h2 class="card-title text-center">Pronto! Seu e-mail foi confirmado.</h2>
+								
+								<h3 class="text-center">
+									Muito obrigado por se registrar em nossa plataforma. 
+									<br/>
+									
+									<br/>
+									<a jsf:outcome="/login.jsf" class="btn green btn-round">
+			                            <i class="material-icons">fingerprint</i> Efetuar Login
+			                        </a>
+								</h3>
+								
+								
+								<br/>
+				
+							</div> <!-- fim card -->
+									
+						</div> <!-- fim col -->
+									
+					</div> <!-- fim row -->
+                
+            	</div> <!-- fim container -->
+            	
+            </div> <!-- fim content -->
+            
+            <ui:insert name="footer">
+   				<ui:include src="WEB-INF/template/fragments/footer-full-page.xhtml" />
+   			</ui:insert>
+           
+           	
+		</div> <!-- fim fullpage -->
+		
+	</ui:define>
+	
+</ui:composition>

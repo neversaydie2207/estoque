@@ -1,0 +1,357 @@
+<ui:composition template="/WEB-INF/template/layout-dashboard.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+	
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="dummy"/>
+			<f:viewAction action="#{cadastroEntradaProdutoBean.init()}"/>
+			<f:viewParam name="entrada" value="#{cadastroEntradaProdutoBean.entrada}"/>
+		</f:metadata>
+		
+	</ui:define>
+	
+	<ui:define name="navbar-title">
+		<a class="navbar-brand" href="#" > Adicionar Produto Entrada </a>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		
+		<div class="content">
+			<div class="container-fluid">
+				
+				<div class="col-md-12">
+					
+					<div class="card">
+						
+						<div class="card-header" data-background-color="green">
+							<i class="material-icons">recent_actors</i>
+							<h4 class="title white-text">Incluir Produto Entrada </h4>
+						</div>
+						
+						<div class="card-content">
+							
+							<div class="nav-center">
+								
+								<ul id="myTabs" class="nav nav-pills nav-pills-info nav-pills-icons " role="tablist">
+									
+									<li>
+                                        <a href="#tabCadastroCargo" role="tab" data-toggle="tab">
+                                            <i class="material-icons">create</i> Incluir Produto Entrada
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="active">
+                                        <a href="#tabCargosCadastrados" role="tab" data-toggle="tab">
+                                            <i class="material-icons">reorder</i> Produtos Incluídos
+                                        </a>
+                                    </li>
+								
+								</ul>
+								
+								
+							</div>
+							
+							<div class="tab-content">
+                                <div class="tab-pane" id="tabCadastroCargo" style="padding: 20px;">
+                                
+									<h:form id="frmCadastroCargo">
+										
+										<div class="col-md-12">
+											
+											<h:panelGroup id="grupoMsg">
+											
+												<p:ajaxStatus>
+													<f:facet name="start">
+														
+														<div class="progress">
+													    	<div class="indeterminate"></div>
+													  	</div>
+														
+													</f:facet>
+													
+													<f:facet name="complete">
+														<h:outputText value="" />
+													</f:facet>
+												</p:ajaxStatus>
+												
+												<ui:include src="/WEB-INF/template/fragments/messages/alert-messages.xhtml" />
+										    	
+											</h:panelGroup>
+										</div>
+										
+										<div class="row">
+											
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label">PRODUTO </label>
+														<h:selectOneMenu id="produto" styleClass="form-control"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.produto}"
+														required="true" 
+														requiredMessage="Campo Produto é requerido" >
+														
+														<f:selectItem itemLabel="" noSelectionOption="true"/>
+														
+														<f:selectItems value="#{cadastroEntradaProdutoBean.listaProduto}" var="produto" 
+										   				itemValue="#{produto}" itemLabel="#{produto.nome}"/>
+														
+													</h:selectOneMenu>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label">QUANTIDADE </label>
+													<h:inputText id="quantidade" styleClass="form-control"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.quantidade}"
+														required="true" 
+														requiredMessage="Campo Quantidade é requerido"/>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label">VALOR UNITÁRIO </label>
+													<h:inputText id="valorUnitario" styleClass="form-control"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.valorUnitario}"
+														required="true" 
+														requiredMessage="Campo Valor Unitário é requerido"/>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label">LOTE </label>
+													<h:inputText id="lote" styleClass="form-control"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.numeroLote}"
+														required="true" 
+														requiredMessage="Campo Lote é requerido"/>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label">PERECÍVEL </label>
+														<h:selectOneMenu id="perecivel" styleClass="form-control"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.perecivel}" 
+														required="true" 
+														requiredMessage="Campo Perecível é requerido">
+														
+														<f:selectItem itemLabel="" noSelectionOption="true"/>
+														<f:selectItem itemLabel="Sim" noSelectionOption="false" itemValue="true" />
+														<f:selectItem itemLabel="Não" noSelectionOption="false" itemValue="false" />
+														
+													</h:selectOneMenu>
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<div class="form-group">
+													<label class="control-label">VALIDADE LOTE </label>
+													<h:inputText id="cata" styleClass="form-control js-mask-data"
+														value="#{cadastroEntradaProdutoBean.entradaProduto.validadeLote}">
+														
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+														
+													</h:inputText>
+												</div>
+											</div>
+											
+											
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<div class="modal-footer">
+													<h:commandButton styleClass="btn btn-simple" value="Novo"
+														action="#{cadastroEntradaAlmoxarifadoBean.novo()}">
+														<p:ajax process="@this" update="@form, scripts"  />
+													</h:commandButton>
+													
+													<h:commandButton styleClass="btn btn-fill btn-primary" style="margin: 0px !important;" 
+														value="Salvar" action="#{cadastroEntradaProdutoBean.salvar()}">
+														
+														<p:ajax process="@form" update="@form, :frmCargosCadastrados, scripts" 
+															onstart="amges.showDialog('processando')"
+															oncomplete="amges.showDialog('close')" 
+															/>
+														
+													</h:commandButton>
+												
+												
+												</div>
+											
+											</div>
+										</div>
+										
+									</h:form>
+							
+								</div> <!-- fim tab-pane -->
+								
+                                <div class="tab-pane active" id="tabCargosCadastrados">
+                                	
+                                	<h:form id="frmCargosCadastrados">
+										
+										<!--  
+										<div class="row">
+											<div class="col-md-6 ">
+											
+												<div class="form-group label-floating">
+													<label class="control-label">Pesquisar Produto Entrada</label>
+													<div class="input-group">
+		
+														<h:inputText id="pesquisaNome" styleClass="form-control"
+															value="#{cadastroEntradaProduto.filtro.id}"/>
+														
+														<div class="input-group-addon">
+															<p:commandLink id="btnPesquisar" update="tblCargos" process="@form" >
+																<i class="material-icons">search</i>
+															</p:commandLink>
+															
+															<p:defaultCommand target="btnPesquisar" scope="frmCargosCadastrados" />
+														</div>
+													
+													</div>
+												</div>
+												
+											</div>
+										
+										</div>
+										-->
+										
+										<br/>
+										<p:dataTable value="#{cadastroEntradaProdutoBean.produtosPorEntrada}" lazy="true" var="c" 
+											paginator="true" paginatorPosition="bottom" rows="5" id="tblCargos"
+											tableStyleClass="table table-striped"  reflow="true"
+											paginatorTemplate="{CurrentPageReport} {PageLinks} {RowsPerPageDropdown}" 
+											rowsPerPageTemplate="5,10,15" 
+											rowKey="#{f.id}" sortBy="#{f.id}" sortOrder="ascending"
+											currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} 
+												- Página: {currentPage}/{totalPages} ]"
+											style="font-size: 1.2rem;"
+											emptyMessage="Nenhum resultado">
+											
+											<p:column width="10%" styleClass="center" sortBy="#{c.id}">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">ID</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.id}"/>
+											</p:column>
+											
+											<!--  
+											<p:column width="30%" styleClass="center" sortBy="#{c.codigo}">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">CODIGO</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.codigo}"/>
+											</p:column>
+											-->
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">PRODUTO</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.produto.nome.toUpperCase()}"/>
+											</p:column>
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">QUANTIDADE</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.quantidade}"/>
+											</p:column>
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">VALOR UNITÁRIO</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.valorUnitario}"/>
+											</p:column>
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">VALOR TOTAL</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.valorTotal}"/>
+											</p:column>
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">PERECÍVEL</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.perecivel}"/>
+											</p:column>
+											
+											<p:column width="40%" sortBy="#{c.produto.nome}" style="text-align: left;">
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">VALIDADE LOTE</span>
+												</f:facet>
+												
+												<h:outputText value="#{c.validadeLote}" styleClass="js-mask-data" >
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+											
+											<p:column width="20%" styleClass="td-actions text-center">
+												
+												<f:facet name="header">
+													<span style="font-weight: bold; font-size: 1.3rem;">AÇÕES</span>
+												</f:facet>
+												
+                                                <p:commandLink pt:rel="tooltip" styleClass="btn btn-success btn-simple"
+													process="@form" update="@form, :frmCadastroCargo, scripts"
+													action="#{cadastroEntradaProdutoBean.excluir(c)}"
+													pt:data-toggle="tooltip" pt:data-placement="left" 
+													pt:title="Excluir" 
+													>
+                                                    <i class="material-icons">remove_circle_outline</i>
+                                                    
+                                                </p:commandLink>
+                                                
+                                                
+                                                
+											</p:column>
+											
+										</p:dataTable>
+										
+										
+                                	</h:form>
+                                	
+                                </div>
+                                
+							</div> <!-- fim tab-content -->
+							
+							
+						</div> <!-- fim card-content --> 
+						
+					
+					</div> <!-- fim card -->
+				
+				</div> <!-- fim col --> 
+			
+			</div> <!-- fim content-fluid -->
+		
+		
+		</div> <!-- fim content -->
+		
+		
+		<!-- MODAIS --> 
+	
+	</ui:define>
+	
+</ui:composition>

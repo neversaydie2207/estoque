@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:wc="http://googlecode.com/wickedcharts"
+	>
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>#{msg.plataforma}</title>
+	
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<meta name="viewport" content="width=device-width" />
+	
+	<!-- Bootstrap core CSS     -->
+	<link href="#{request.contextPath}/resources/layout/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!--  Material Dashboard CSS    -->
+	<link href="#{request.contextPath}/resources/layout/css/material-dashboard.css" rel="stylesheet" />
+	
+	
+	<!-- Materialize Custom -->
+	<link href="#{request.contextPath}/resources/layout/css/vendors/materialize-custom.css"
+		rel="stylesheet" />
+		
+	<link href="#{request.contextPath}/resources/layout/css/vendors/theme-primefaces-custom.css"
+		rel="stylesheet" />
+		
+	<!-- AMGES -->
+	<link href="#{request.contextPath}/resources/css/amges.css"
+		rel="stylesheet" />
+		
+	<!-- FULLCALENDAR - CUSTOM -->
+	
+	
+	<!--     Fonts and icons     -->
+	<link
+		href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+		rel="stylesheet"/>
+	<link
+		href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons'
+		rel='stylesheet' type='text/css'/>
+	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
+		crossorigin="anonymous"/>
+	
+	<script type="text/javascript">
+		PrimeFaces.locales['pt_BR'] = {
+			    closeText: 'Fechar',
+			    prevText: 'Anterior',
+			    nextText: 'Próximo',
+			    currentText: 'Hoje',
+			    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+			    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
+			    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+			    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+			    dayNamesMin: ['D','S','T','Q','Q','S','S'],
+			    weekHeader: 'Semana',
+			    firstDay: 0,
+			    isRTL: false,
+			    showMonthAfterYear: false,
+			    yearSuffix: '',
+			    timeOnlyTitle: 'Só Horas',
+			    timeText: 'Tempo',
+			    hourText: 'Hora',
+			    minuteText: 'Minuto',
+			    secondText: 'Segundo',
+			    ampm: false,
+			    month: 'Agendamento Mensal',
+			    week: 'Agendamento Semanal',
+			    day: 'Agendamento Diário',
+			    allDayText : 'Todo o Dia'
+			};
+
+	  
+  </script>
+  
+  
+
+</h:head>
+
+<h:body>
+	
+	<ui:insert name="metadata">
+		
+	</ui:insert>
+	
+	<div class="wrapper">
+		<p:commandLink></p:commandLink>
+		
+		<ui:insert name="sidebar">
+			<ui:include src="/WEB-INF/template/fragments/sidebar.xhtml" />
+		</ui:insert>
+		
+		<div class="main-panel">
+
+			<ui:insert name="navbar">
+				
+				<ui:include src="/WEB-INF/template/fragments/navbar.xhtml" />
+				
+			</ui:insert>
+			
+			<div class="content">
+               	<div class="container-fluid">
+               	
+               		<ui:insert name="conteudo">
+               		
+               		</ui:insert>
+               	
+				</div>
+			</div>
+
+
+		</div>
+		
+		
+
+	</div> <!--  fim wrapper -->
+	
+
+</h:body>
+	
+		<!--   Core JS Files   -->
+		
+		<script src="#{request.contextPath}/resources/layout/js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="#{request.contextPath}/resources/layout/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="#{request.contextPath}/resources/layout/js/material.min.js" type="text/javascript"></script>
+		<script src="#{request.contextPath}/resources/layout/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+		
+		<!-- Core Amges UPDATE-->
+		
+		<script src="#{request.contextPath}/resources/javascripts/amges-dialog.js"></script>
+		<script src="#{request.contextPath}/resources/javascripts/vendors/jquery.maskMoney.min.js"></script>
+		<script src="#{request.contextPath}/resources/javascripts/vendors/jquery.mask.min.js"></script>
+		
+		<!-- Forms Validations Plugin -->
+		<script src="#{request.contextPath}/resources/layout/js/jquery.validate.min.js"></script>
+		
+		<!--  Plugin for Date Time Picker and Full Calendar Plugin OBS -->
+		<script src="#{request.contextPath}/resources/layout/js/moment.min.js"></script>
+		
+		<!-- Moment Plugin PT-BR OBS -->
+		<script src="#{request.contextPath}/resources/layout/js/moment-ptbr.js"></script>
+		
+		<!--  Charts Plugin RETIRADO PARA TESTES (30/04/2018) 
+		<script src="#{request.contextPath}/resources/layout/js/chartist.min.js"></script>
+		-->
+		
+		<!--  Plugin for the Wizard -->
+		<script src="#{request.contextPath}/resources/layout/js/jquery.bootstrap-wizard.js"></script>
+		
+		<!--  Notifications Plugin    -->
+		<script src="#{request.contextPath}/resources/layout/js/bootstrap-notify.js"></script>
+		
+		<!--   Sharrre Library OBS   -->
+		
+		
+		<!-- DateTimePicker Plugin OBS -->
+		<script src="#{request.contextPath}/resources/layout/js/bootstrap-datetimepicker.js"></script>
+		
+		<!-- Vector Map plugin -->
+		<script src="#{request.contextPath}/resources/layout/js/jquery-jvectormap.js"></script>
+		
+		<!-- Sliders Plugin -->
+		<script src="#{request.contextPath}/resources/layout/js/nouislider.min.js"></script>
+		
+		
+		<script src="#{request.contextPath}/resources/layout/js/jquery.select-bootstrap.js"></script>
+		<!--  DataTables.net Plugin    -->
+		
+		<script src="#{request.contextPath}/resources/layout/js/jquery.datatables.js"></script>
+		
+		<!-- Sweet Alert 2 plugin -->
+		<script src="#{request.contextPath}/resources/layout/js/sweetalert2.js"></script>
+		
+		<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+		<script src="#{request.contextPath}/resources/layout/js/jasny-bootstrap.min.js"></script>
+		
+		<!--  Full Calendar Plugin  OBS  -->
+		
+		
+		<!-- DateTimePicker Plugin -->
+		
+		
+		
+		<!-- Plugin for Select Form control, full documentation here: https://github.com/FezVrasta/dropdown.js  -->
+		<script src="#{request.contextPath}/resources/layout/js/jquery.dropdown.js"></script>
+		
+		<!-- TagsInput Plugin -->
+		<script src="#{request.contextPath}/resources/layout/js/jquery.tagsinput.js"></script>
+		
+		<h:panelGroup id="scripts">
+			<script src="#{request.contextPath}/resources/javascripts/amges.js"></script>
+			
+			<script src="#{request.contextPath}/resources/javascripts/utiljs.js"></script>
+			
+			<script src="#{request.contextPath}/resources/javascripts/vendors/Chart.js"></script>
+			
+			<script src="#{request.contextPath}/resources/javascripts/vendors/chartjs-plugin-datalabels.min.js"></script>
+			
+			<!-- https://jasonday.github.io/printThis/ -->
+			<script src="#{request.contextPath}/resources/javascripts/vendors/printThis.js"></script>	
+			
+			
+			
+			<!-- Material Dashboard javascript methods -->
+			<script src="#{request.contextPath}/resources/layout/js/material-dashboard.js"></script>
+			
+			<h:outputScript library="javascripts" name="vendors/bootstrap-filestyle.min.js"/>
+		
+		</h:panelGroup>
+		
+		<script src="#{request.contextPath}/resources/layout/js/demo.js"></script>
+		
+		<o:onloadScript>
+			
+			<!-- MASCARAS DE DATAS -->
+			$(function() {
+	
+				var maskMoney = new Amges.MaskMoney();
+				maskMoney.enable();
+				
+				var mask = new Amges.Mask();
+				mask.enable();
+				
+			});
+			
+														
+		</o:onloadScript>
+		
+		<!-- COMBOBOX -->
+		<o:onloadScript>
+			
+			$(document).ready(function(){
+
+			    $sidebar = $('.sidebar');
+			
+			    $.material.init();
+			
+			    // We put modals out of wrapper to working properly
+			    $('.modal').appendTo("body");
+			
+			    md.initSidebarsCheck();
+			
+			    if($('body').hasClass('sidebar-mini')){
+			        md.misc.sidebar_mini_active = true;
+			    }
+			
+			    window_width = $(window).width();
+			
+			    // check if there is an image set for the sidebar's background
+			    md.checkSidebarImage();
+			
+			    md.initMinimizeSidebar();
+			
+			    //    Activate bootstrap-select
+			    if($(".selectpicker").length != 0){
+			        $(".selectpicker").selectpicker();
+			    }
+			
+			    //  Activate the tooltips
+			    $('[rel="tooltip"]').tooltip();
+			
+			    //removed class label and label-color from tag span and replaced with data-color
+			    var tagClass = $('.tagsinput').data('color');
+			
+			    $('.tagsinput').tagsinput({
+			        tagClass: ' tag-'+ tagClass +' '
+			    });
+			
+			    //    Activate bootstrap-select
+			    $(".select").dropdown({ "dropdownClass": "dropdown-menu", "optionClass": "" });
+			
+			    $('.form-control').on("focus", function(){
+			        $(this).parent('.input-group').addClass("input-group-focus");
+			    }).on("blur", function(){
+			        $(this).parent(".input-group").removeClass("input-group-focus");
+			    });
+			
+			
+			    if(breakCards == true){
+			        // We break the cards headers if there is too much stress on them :-)
+			        $('[data-header-animation="true"]').each(function(){
+			            var $fix_button = $(this)
+			            var $card = $(this).parent('.card');
+			
+			            $card.find('.fix-broken-card').click(function(){
+			                console.log(this);
+			                var $header = $(this).parent().parent().siblings('.card-header, .card-image');
+			
+			                $header.removeClass('hinge').addClass('fadeInDown');
+			
+			                $card.attr('data-count',0);
+			
+			                setTimeout(function(){
+			                    $header.removeClass('fadeInDown animate');
+			                },480);
+			            });
+			
+			            $card.mouseenter(function(){
+			                var $this = $(this);
+			                hover_count = parseInt($this.attr('data-count'), 10) + 1 || 0;
+			                $this.attr("data-count", hover_count);
+			
+			                if (hover_count >= 20){
+			                    $(this).children('.card-header, .card-image').addClass('hinge animated');
+			                }
+			            });
+			        });
+			    }
+			    
+			
+			
+			});
+			
+			
+		</o:onloadScript>
+
+	
+		
+		<ui:insert name="scripts-onload">
+				
+		</ui:insert>
+		
+		
+</html>
